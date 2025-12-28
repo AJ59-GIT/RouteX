@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniRoute India</title>
+  <link rel="manifest" href="/manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              slate: '#334155',
+              coral: '#FB923C',
+              cream: '#FFFBEB',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    // Prevent theme flash
+    (function() {
+      try {
+        const profile = JSON.parse(localStorage.getItem('omniroute_profile'));
+        if (profile && profile.settings) {
+          if (profile.settings.darkMode) document.documentElement.classList.add('dark');
+          if (profile.settings.highContrastMode) document.documentElement.classList.add('high-contrast');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    
+    /* Warm & Approachable Palette */
+    .bg-cream { background-color: #FFFBEB; }
+    .bg-slate-brand { background-color: #334155; }
+    .bg-coral-brand { background-color: #FB923C; }
+    .text-slate-brand { color: #334155; }
+    .text-coral-brand { color: #FB923C; }
+
+    .glass { background: rgba(255, 251, 235, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .dark .glass { background: rgba(51, 65, 85, 0.85); }
+    .scrollbar-hide::-webkit-scrollbar { display: none !important; }
+    .scrollbar-hide { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton {
+      background: linear-gradient(90deg, #fefce8 25%, #fef3c7 50%, #fefce8 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+    .dark .skeleton {
+      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+      background-size: 200% 100%;
+    }
+
+    .high-contrast body {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+    .high-contrast .bg-white, .high-contrast .bg-cream {
+      background-color: #111 !important;
+      border-color: #fff !important;
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.2.3",
+    "react/": "https://esm.sh/react@19.2.3/",
+    "react-dom": "https://esm.sh/react-dom@19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.2.3",
+    "framer-motion": "https://esm.sh/framer-motion@11.11.11?deps=react@19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@1.34.0",
+    "zod": "https://esm.sh/zod@3.23.8"
+  }
+}
+</script>
+</head>
+<body class="bg-[#FFFBEB] dark:bg-slate-900 text-slate-800 dark:text-[#FFFBEB] transition-colors duration-300">
+  <div id="root"></div>
+</body>
+</html>

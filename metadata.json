@@ -1,0 +1,8 @@
+{
+  "name": "Copy of Copy of OmniRoute India - Smart MaaS Aggregator",
+  "description": "A comprehensive multimodal mobility application that aggregates public transit, ride-hailing, and micro-mobility to suggest the best routes in Indian metro cities based on cost, time, and sustainability.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ]
+}

@@ -1,0 +1,40 @@
+
+{
+  "name": "OmniRoute India",
+  "short_name": "OmniRoute",
+  "description": "Smart MaaS Aggregator for Indian Metro Cities. Public transit, ride-hailing, and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#4f46e5",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "categories": ["travel", "productivity"],
+  "icons": [
+    {
+      "src": "https://api.dicebear.com/7.x/initials/svg?seed=OR&backgroundColor=4f46e5",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "https://api.dicebear.com/7.x/initials/svg?seed=OR&backgroundColor=4f46e5",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Go Home",
+      "url": "/?shortcut=home",
+      "description": "Quickly find routes to home",
+      "icons": [{ "src": "https://api.dicebear.com/7.x/initials/svg?seed=H&backgroundColor=4f46e5", "sizes": "192x192" }]
+    },
+    {
+      "name": "Go to Work",
+      "url": "/?shortcut=work",
+      "description": "Quickly find routes to work",
+      "icons": [{ "src": "https://api.dicebear.com/7.x/initials/svg?seed=W&backgroundColor=4f46e5", "sizes": "192x192" }]
+    }
+  ]
+}
