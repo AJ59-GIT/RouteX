@@ -6,9 +6,10 @@ import { t } from '../services/i18nService';
 import { 
   Settings as SettingsIcon, Bell, Shield, ChevronRight, LogOut, Smartphone, Moon, Zap, 
   IndianRupee, FlaskConical, X, Share2, Users, Gift, Eye, Type, Volume2, Vibrate, 
-  Lock, Languages, Briefcase, FileText, Download, Trash2, Info, ShieldAlert
+  Lock, Languages, Briefcase, FileText, Download, Trash2, Info, ShieldAlert, FileJson
 } from 'lucide-react';
 import { useGlobalState } from '../context/GlobalContext';
+import { securityService } from '../services/securityService';
 
 interface ProfileSettingsProps {
   profile: UserProfile;
@@ -20,6 +21,18 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ profile, onUpdateSett
   const [showLegal, setShowLegal] = useState<'privacy' | 'terms' | null>(null);
 
   const lang = profile.settings.language;
+
+  const downloadManifest = async () => {
+    try {
+      const response = await fetch('/PROJECT_DETAILS.txt');
+      const text = await response.text();
+      securityService.exportTextDocument('OmniRoute_Project_Details.txt', text);
+    } catch (err) {
+      console.error("Failed to fetch manifest", err);
+      // Fallback content if fetch fails during development
+      securityService.exportTextDocument('OmniRoute_Project_Details.txt', "Project details manifest failed to load.");
+    }
+  };
 
   return (
     <div className="space-y-8 pb-12">
@@ -40,21 +53,39 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ profile, onUpdateSett
           <ShieldAlert className="w-4 h-4 text-indigo-500" />
           Developer Access
         </h3>
-        <button 
-          onClick={() => setRole('admin')}
-          className="w-full p-5 bg-indigo-600 text-white rounded-[2.5rem] flex items-center justify-between shadow-lg shadow-indigo-500/20 active:scale-[0.98] transition-all"
-        >
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-              <SettingsIcon className="w-5 h-5 text-white" />
+        <div className="space-y-3">
+          <button 
+            onClick={() => setRole('admin')}
+            className="w-full p-5 bg-indigo-600 text-white rounded-[2rem] flex items-center justify-between shadow-lg shadow-indigo-500/20 active:scale-[0.98] transition-all"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                <SettingsIcon className="w-5 h-5 text-white" />
+              </div>
+              <div className="text-left">
+                <div className="text-sm font-black">Admin Command Center</div>
+                <div className="text-[10px] opacity-80 uppercase font-bold">System monitoring & audits</div>
+              </div>
             </div>
-            <div className="text-left">
-              <div className="text-sm font-black">Admin Command Center</div>
-              <div className="text-[10px] opacity-80 uppercase font-bold">System monitoring & audits</div>
+            <ChevronRight className="w-4 h-4" />
+          </button>
+
+          <button 
+            onClick={downloadManifest}
+            className="w-full p-5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-[2rem] border border-slate-100 dark:border-slate-700 flex items-center justify-between shadow-sm active:scale-[0.98] transition-all"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-slate-50 dark:bg-slate-900 rounded-xl flex items-center justify-center">
+                <FileJson className="w-5 h-5 text-indigo-500" />
+              </div>
+              <div className="text-left">
+                <div className="text-sm font-black">Project Manifest</div>
+                <div className="text-[10px] opacity-80 uppercase font-bold text-slate-400">Download Documentation</div>
+              </div>
             </div>
-          </div>
-          <ChevronRight className="w-4 h-4" />
-        </button>
+            <Download className="w-4 h-4 text-slate-300" />
+          </button>
+        </div>
       </section>
 
       {/* Appearance Settings */}

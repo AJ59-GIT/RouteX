@@ -1,0 +1,53 @@
+================================================================================
+PROJECT: OMNIROUTE INDIA - SMART MaaS AGGREGATOR
+================================================================================
+
+1. OVERVIEW
+OmniRoute India is a world-class Mobility-as-a-Service (MaaS) aggregator 
+specifically engineered for the complex transit landscape of Indian Metro cities.
+It connects public transport (Metro, Local Trains, Buses) with private providers
+(Ola, Uber, Rapido) and community-driven options (Carpooling, Bike-sharing).
+
+2. CORE FEATURES
+- Multimodal Smart Routing: AI-driven pathfinding that mixes transit modes.
+- Magic Mode (NLP): Natural language processing to parse complex travel queries.
+- Safety Shield: Integrated SOS, live location sharing, and emergency contacts.
+- Real-time Traffic Feeds: Dynamic route adjustment based on live city congestion.
+- Eco-Impact Dashboard: Real-time CO2 savings tracking and community leaderboard.
+- PWA Architecture: Offline booking fallback, service worker caching, and 
+  low-bandwidth optimization.
+- Smart Insights: Predictive analytics on crowd levels, price surges, and 
+  optimal departure times.
+
+3. TECHNICAL STACK
+- UI Framework: React 19.0 (ES Modules via ESM.sh)
+- Styling: Tailwind CSS (Modern Utility-First)
+- Animations: Framer Motion (Smooth gesture-based transitions)
+- AI Engine: Google Gemini 2.5/3.0 API (@google/genai)
+- State Management: React Context API + Custom Hooks
+- Type Safety: TypeScript + Zod (Runtime Schema Validation)
+- Persistence: LocalStorage + Storage Service Layer (Cloud-ready)
+- Reliability: Service Workers (sw.js) + Robust Error Boundaries
+
+4. COMPETITIVE ANALYSIS (Vs. OLA, UBER, RAPIDO)
+While market leaders focus on single-provider fulfillment, OmniRoute bridges 
+the gap with:
+- Aggregation: Compare Ola, Uber, and Rapido prices on one screen.
+- Multimodal: Combines an Auto/Cab with the Metro to bypass "Gridlock" traffic.
+- Public Transit Integration: Real-time Metro/Local Train schedules.
+- Sustainability: Explicit focus on carbon footprint vs. just speed/cost.
+
+5. MISSING ENTERPRISE FUNCTIONS (FUTURE ROADMAP)
+- Direct API Booking: Moving from deep-linking to in-app transactional APIs.
+- Driver Hub: Direct two-way communication with the assigned vehicle.
+- Safety SOS Hub: Direct 100/102 integration with local police dispatch.
+- Multi-stop Itineraries: Complex routing for errands and carpooling pick-ups.
+
+6. DESIGN PRINCIPLES
+- Aesthetics: Warm palette (Slate Gray & Coral) for an approachable feel.
+- Accessibility: High-contrast mode, biometric unlock, and screen-reader support.
+- Performance: Stale-while-revalidate caching and skeleton loading states.
+
+================================================================================
+OMNIROUTE INDIA | SMART MOBILITY FOR THE NEXT BILLION USERS
+================================================================================
