@@ -1,5 +1,6 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
-import { RouteRequest, TravelOption, TransportMode, Preference } from "../types";
+import { RouteRequest, TravelOption, TransportMode, Preference, RouteLeg } from "../types";
 import { trafficService } from "./trafficService";
 import { z } from "zod";
 
@@ -73,7 +74,6 @@ export const getSmartRoutes = async (request: RouteRequest): Promise<TravelOptio
   const currentTime = new Date().toLocaleTimeString();
   const allowedModes = Object.values(TransportMode);
   
-  // Simulation: Fetch "Live Traffic Data" to inject into prompt context
   const trafficContext = await trafficService.getCityTrafficData(request.city);
   const trafficString = trafficContext.map(z => `${z.name}: ${z.density}`).join(', ');
 
@@ -93,7 +93,6 @@ export const getSmartRoutes = async (request: RouteRequest): Promise<TravelOptio
   `;
 
   try {
-    // Use gemini-3-pro-preview for complex reasoning and route optimization
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: prompt,
@@ -170,11 +169,56 @@ export const getSmartRoutes = async (request: RouteRequest): Promise<TravelOptio
   }
 };
 
+/**
+ * Fetches updated status for a specific route option.
+ * Used for live tracking and periodic updates.
+ */
+export const updateRouteLiveStatus = async (option: TravelOption): Promise<Partial<TravelOption>> => {
+  const ai = getAI();
+  const prompt = `
+    Check for live traffic delays and crowd updates for this specific route: "${option.title}".
+    Legs to check: ${option.legs.map(l => l.mode + ' with ' + l.provider).join(', ')}.
+    Return updated 'delayMinutes', 'crowdLevel', and 'trafficStatus' for the whole trip.
+    Strictly JSON.
+  `;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            trafficStatus: { type: Type.STRING, enum: ["Low", "Moderate", "Heavy", "Gridlock"] },
+            legs: {
+              type: Type.ARRAY,
+              items: {
+                type: Type.OBJECT,
+                properties: {
+                  delayMinutes: { type: Type.NUMBER },
+                  crowdLevel: { type: Type.STRING, enum: ['Quiet', 'Busy', 'Crowded', 'Standing Room Only'] }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const text = response.text?.trim();
+    return text ? JSON.parse(text) : {};
+  } catch (error) {
+    console.warn("[Live Status Update Error]", error);
+    return {};
+  }
+};
+
 export const parseNaturalQuery = async (query: string): Promise<Partial<RouteRequest>> => {
   const ai = getAI();
   const prompt = `Extract: source, destination, city, preference from this query: "${query}". Respond only with JSON.`;
   try {
-    // Use gemini-3-flash-preview for efficient natural language parsing
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,

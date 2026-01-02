@@ -1,8 +1,9 @@
-import React from 'react';
+
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertCircle, RotateCcw } from 'lucide-react';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface State {
@@ -13,8 +14,8 @@ interface State {
 /**
  * ErrorBoundary component to catch and handle UI errors gracefully.
  */
-// Fix: Use React.Component explicitly to ensure 'setState' and 'props' are inherited correctly from the React library.
-export class ErrorBoundary extends React.Component<Props, State> {
+// Use explicit Component inheritance to ensure React's lifecycle methods and properties are correctly typed.
+export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
     error: null
@@ -24,7 +25,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     return { hasError: true, error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
   }
 
@@ -32,7 +33,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
    * Resets the error state and reloads the application.
    */
   private handleReset = () => {
-    // Fix: setState is a method inherited from React.Component.
+    // setState is a method inherited from React.Component.
     this.setState({ hasError: false, error: null });
     window.location.reload();
   };
@@ -61,7 +62,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
       );
     }
 
-    // Fix: props is inherited from the React.Component base class.
+    // props is inherited from the React.Component base class.
     return this.props.children;
   }
 }
